@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thmyleaf.org">
+
+
+
+<form method="get" th:action="@{index}">
+	Key word : <input type="text" name="keyword" th:value="${keyword}">
+	<input type="submit" value="Cherche">
+</form>
+
+
+<p>----------------------------------</p>
+<table>
+
+	<thead>
+		<tr>
+			<td>Nom</td><td>Date</td><td>Malade</td>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr th:each="p:${listPcontroller}">
+			<td th:text="${p.getId()}"></td>
+			<td th:text="${p.nom}"></td>
+			<td th:text="${p.dateNaissance}"></td>	
+			<td th:text="${p.malade}"></td>
+			<td th:text="${p.score}"></td>
+			<td>
+				<a 	onclick="return confirm('sur ?')"
+					th:href="@{delete(id=${p.id} , keyword=${keyword} , page=${currentPage} )}">
+					<button>Dell</button>
+				</a>
+			</td>
+			
+		</tr>
+	</tbody>
+</table>
+
+<ul>
+	<li th:each="page,status:${page}">
+		<a th:href="@{index(page=${status.index} , keyword=${keyword})}">
+			<button
+				th:text="${status.index}"
+			>
+			</button>
+		</a>
+	</li>
+</ul>
+</html>
