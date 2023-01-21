@@ -17,7 +17,7 @@ public class ThymeleafDemoApplication {
 		SpringApplication.run(ThymeleafDemoApplication.class, args);
 	}
 	
-	//@Bean
+	@Bean
 	CommandLineRunner commandLineRunner(PatientRepository patientRepository) {
 		return args ->{
 			patientRepository.save(new Patient(null,"ahmed",new Date(),false,102));

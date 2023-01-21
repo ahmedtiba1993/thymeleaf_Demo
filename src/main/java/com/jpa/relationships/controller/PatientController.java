@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jpa.relationships.Repository.PatientRepository;
 import com.jpa.relationships.models.Patient;
@@ -74,12 +75,37 @@ public class PatientController {
 	}
 	
 	@PostMapping(path="/save")
-	public String save(Model model, @Valid Patient patient , BindingResult bindingResult) {
+	public String save(Model model, @Valid Patient patient , BindingResult bindingResult , 
+			@RequestParam(name="page",defaultValue = "0") int page ,
+			@RequestParam(name="keyword",defaultValue = "")  String keyword ,
+			RedirectAttributes redirAttrs){
 		if(bindingResult.hasErrors()) {
 			return "formAdd";
 		}
+		/*
+		  if (!everythingOkay()) {
+        		redirAttrs.addFlashAttribute("error", "The error XYZ occurred.");
+        	return "redirect:/settings/";
+    		}
+		 */
 		patientRepository.save(patient);
-		return "formAdd";
+	    redirAttrs.addFlashAttribute("success", "Ajouté avec succès");
+		return "redirect:/index?page="+page+"&keyword="+keyword;
 	}
+	
+	@GetMapping("/formEdit")
+	public String formEdit(Model model,Long id , String keyword , int page){
+
+		Patient patient=patientRepository.findById(id).orElse(null);
+		if(patient==null) {
+			throw new RuntimeException("Patient introvable");
+		}
+		model.addAttribute("patient",patient);
+		model.addAttribute("page",page);
+		model.addAttribute("keyword",keyword);
+		
+		return "formEdit";
+	}
+	
 
 }

@@ -6,7 +6,15 @@
 
 <div layout:fragment="content1">
 
-	<form method="POST" th:action="@{save}">
+	<form method="POST" th:action="@{save(page=${page} , keyword=${keyword})}">
+	
+	    ID: 
+		<!-- <input type="number" name="id" th:value="${patient.id}"> -->
+		<span th:text="${patient.id}"></span>
+		<span style="color:red;" th:errors="${patient.id}"></span>
+		
+		<br>
+	
 		Nom: 
 		<input type="text" name="nom" th:value="${patient.nom}">
 		<span style="color:red;" th:errors="${patient.nom}"></span>
@@ -20,7 +28,7 @@
 	<br>
 	
 		Malade :
-		<input type="checkbox" name="dateNaissance" th:checked="${patient.malade}">
+		<input type="checkbox" name="malade" th:checked="${patient.malade}">
 		<span style="color:red;" th:errors="${patient.malade}"></span>
 	
 	<br>

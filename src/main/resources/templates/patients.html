@@ -13,11 +13,17 @@
 		
 		
 		<p>----------------------------------</p>
-		<table>
-		
+		<table border="2">
+		<span th:text="${success}" th:if="${success}"></span>
 			<thead>
 				<tr>
-					<td>Nom</td><td>Date</td><td>Malade</td>
+					<td>Id</td>
+					<td>Nom</td>
+					<td>Date</td>
+					<td>Malade</td>
+					<td>Score</td>
+					<td>DELL</td>
+					<td>EDIT</td>
 				</tr>
 			</thead>
 			
@@ -32,6 +38,11 @@
 						<a 	onclick="return confirm('sur ?')"
 							th:href="@{delete(id=${p.id} , keyword=${keyword} , page=${currentPage} )}">
 							<button>Dell</button>
+						</a>
+					</td>
+					<td>
+						<a	th:href="@{formEdit(id=${p.id}, keyword=${keyword} , page=${currentPage} )}">
+							<button>Edit</button>
 						</a>
 					</td>
 					
